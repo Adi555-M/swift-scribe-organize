@@ -1,10 +1,11 @@
+
 import { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useNotes } from "@/contexts/NotesContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Search, ChevronLeft, X, Check, Copy, Trash } from "lucide-react";
+import { Search, ChevronLeft, X, Check, Copy, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 const NoteDetailPage = () => {
@@ -140,13 +141,13 @@ const NoteDetailPage = () => {
   if (!note) return null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-white pb-20">
+    <div className="min-h-screen flex flex-col bg-white">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 flex justify-between items-center">
+      <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate("/")}
-            className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
+            className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors"
           >
             <ChevronLeft size={28} />
           </button>
@@ -155,7 +156,7 @@ const NoteDetailPage = () => {
           </h1>
         </div>
         
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           {isSearching ? (
             <button
               onClick={() => {
@@ -163,7 +164,7 @@ const NoteDetailPage = () => {
                 setSearchText("");
                 setSearchMatches([]);
               }}
-              className="p-2"
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
               <X size={28} />
             </button>
@@ -171,19 +172,21 @@ const NoteDetailPage = () => {
             <>
               <button
                 onClick={handleCopy}
-                className="p-2 hover:bg-gray-100 rounded-full"
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                aria-label="Copy note"
               >
                 <Copy size={24} />
               </button>
               <button
                 onClick={() => setIsSearching(true)}
-                className="p-2 hover:bg-gray-100 rounded-full"
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                aria-label="Search in note"
               >
                 <Search size={28} />
               </button>
               <button
                 onClick={handleSave}
-                className="bg-blue-500 text-white px-6 py-2.5 rounded-lg flex items-center gap-2 text-lg font-medium hover:bg-blue-600"
+                className="bg-blue-500 text-white px-6 py-2.5 rounded-lg flex items-center gap-2 text-lg font-medium hover:bg-blue-600 transition-colors"
               >
                 <Check size={24} />
                 <span>Save</span>
@@ -195,7 +198,7 @@ const NoteDetailPage = () => {
 
       {/* Search UI */}
       {isSearching && (
-        <div className="p-4 border-b border-gray-200 bg-gray-50">
+        <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
           <div className="flex gap-2">
             <Input
               type="text"
@@ -214,7 +217,7 @@ const NoteDetailPage = () => {
           </div>
           
           {searchMatches.length > 0 && (
-            <div className="flex justify-between items-center text-base mt-2">
+            <div className="flex justify-between items-center mt-3 text-base">
               <span className="text-gray-600">
                 {currentMatchIndex + 1} of {searchMatches.length} matches
               </span>
@@ -232,31 +235,39 @@ const NoteDetailPage = () => {
       )}
 
       {/* Note Content */}
-      <div className="flex-1 p-4 flex flex-col gap-4">
-        <Input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Note title"
-          className="text-2xl font-bold border-none p-0 focus-visible:ring-0 focus-visible:ring-offset-0 h-auto"
-        />
+      <div className="flex-1 px-6 py-4 flex flex-col gap-6">
+        <div className="space-y-2">
+          <label htmlFor="title" className="text-sm font-medium text-gray-700">Title</label>
+          <Input
+            id="title"
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Note title"
+            className="text-2xl font-bold border rounded-lg p-4 focus-visible:ring-2"
+          />
+        </div>
         
-        <Textarea
-          ref={contentRef}
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="Start writing..."
-          className="flex-1 resize-none min-h-[70vh] border-none p-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-lg"
-        />
+        <div className="flex-1 space-y-2">
+          <label htmlFor="content" className="text-sm font-medium text-gray-700">Content</label>
+          <Textarea
+            id="content"
+            ref={contentRef}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Start writing..."
+            className="flex-1 min-h-[calc(100vh-300px)] text-lg p-4 rounded-lg border resize-none focus-visible:ring-2"
+          />
+        </div>
       </div>
 
       {/* Delete button at bottom */}
-      <div className="fixed bottom-20 w-full px-4 py-3 bg-white border-t border-gray-200">
+      <div className="fixed bottom-20 w-full px-6 py-4 bg-white border-t border-gray-200">
         <button
           onClick={handleDelete}
           className="w-full flex items-center justify-center gap-2 py-3 text-red-500 hover:bg-red-50 rounded-lg text-lg font-medium transition-colors"
         >
-          <Trash size={24} />
+          <Trash2 size={24} />
           <span>Delete Note</span>
         </button>
       </div>
