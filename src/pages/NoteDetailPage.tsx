@@ -5,7 +5,8 @@ import { useNotes } from "@/contexts/NotesContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Search, ChevronLeft, X, Check, Copy, Trash2 } from "lucide-react";
+import { Search, ChevronLeft, X, Check, Copy } from "lucide-react";
+import { Trash } from "lucide-react";
 import { toast } from "sonner";
 
 const NoteDetailPage = () => {
@@ -141,22 +142,22 @@ const NoteDetailPage = () => {
   if (!note) return null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-white sm:max-w-md sm:mx-auto">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
-        <div className="flex items-center gap-4">
+      <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 flex justify-between items-center">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => navigate("/")}
             className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors"
           >
-            <ChevronLeft size={28} />
+            <ChevronLeft size={24} />
           </button>
-          <h1 className="text-2xl font-bold">
+          <h1 className="text-xl font-bold">
             {isSearching ? "Search" : "Edit Note"}
           </h1>
         </div>
         
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {isSearching ? (
             <button
               onClick={() => {
@@ -166,7 +167,7 @@ const NoteDetailPage = () => {
               }}
               className="p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
-              <X size={28} />
+              <X size={24} />
             </button>
           ) : (
             <>
@@ -182,13 +183,13 @@ const NoteDetailPage = () => {
                 className="p-2 hover:bg-gray-100 rounded-full transition-colors"
                 aria-label="Search in note"
               >
-                <Search size={28} />
+                <Search size={24} />
               </button>
               <button
                 onClick={handleSave}
-                className="bg-blue-500 text-white px-6 py-2.5 rounded-lg flex items-center gap-2 text-lg font-medium hover:bg-blue-600 transition-colors"
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-base font-medium hover:bg-blue-600 transition-colors"
               >
-                <Check size={24} />
+                <Check size={20} />
                 <span>Save</span>
               </button>
             </>
@@ -262,13 +263,13 @@ const NoteDetailPage = () => {
       </div>
 
       {/* Delete button at bottom */}
-      <div className="fixed bottom-20 w-full px-6 py-4 bg-white border-t border-gray-200">
+      <div className="fixed bottom-20 w-full px-4 py-3 bg-white border-t border-gray-200">
         <button
           onClick={handleDelete}
-          className="w-full flex items-center justify-center gap-2 py-3 text-red-500 hover:bg-red-50 rounded-lg text-lg font-medium transition-colors"
+          className="w-full flex items-center justify-center p-3 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+          aria-label="Delete note"
         >
-          <Trash2 size={24} />
-          <span>Delete Note</span>
+          <Trash size={24} />
         </button>
       </div>
     </div>
