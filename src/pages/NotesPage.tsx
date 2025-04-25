@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useNotes } from "@/contexts/NotesContext";
@@ -8,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Search, Plus } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { ReactNode } from "react";
+import FloatingActionButton from "@/components/FloatingActionButton";
 
 const NotesPage = () => {
   const { notes, addNote } = useNotes();
@@ -46,7 +46,7 @@ const NotesPage = () => {
   };
 
   return (
-    <div className="pb-20 px-4 pt-4">
+    <div className="pb-20 px-4 pt-4 relative">
       <h1 className="text-3xl font-bold mb-6">My Notes</h1>
       
       <div className="relative mb-4">
@@ -93,16 +93,7 @@ const NotesPage = () => {
             </Button>
           </div>
         </div>
-      ) : (
-        <Button
-          onClick={() => setShowAddNote(true)}
-          className="w-full py-6 mb-4 bg-gray-50 hover:bg-gray-100 text-gray-500 border border-gray-200 rounded-xl flex items-center justify-center gap-2"
-          variant="ghost"
-        >
-          <Plus size={20} />
-          Add a new note...
-        </Button>
-      )}
+      ) : null}
 
       {filteredNotes.length === 0 && !showAddNote ? (
         <div className="text-center py-12 text-gray-500">
@@ -127,6 +118,10 @@ const NotesPage = () => {
           ))}
         </div>
       )}
+
+      <FloatingActionButton 
+        onClick={() => setShowAddNote(true)} 
+      />
     </div>
   );
 };
