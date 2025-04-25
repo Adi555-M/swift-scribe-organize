@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useNotes } from "@/contexts/NotesContext";
@@ -143,10 +142,6 @@ const NotesPage = () => {
       )}
 
       <FloatingActionButton onClick={() => setShowAddNote(true)} />
-
-      <div className="fixed bottom-20 left-0 right-0 text-center text-sm text-gray-500 py-2">
-        Created with <Brain className="inline h-4 w-4" /> by mr.marb
-      </div>
     </div>
   );
 };

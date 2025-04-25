@@ -5,7 +5,7 @@ import { useNotes } from "@/contexts/NotesContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Search, ChevronLeft, X, Check, Copy, Trash } from "lucide-react";
+import { Search, ChevronLeft, Copy, Trash } from "lucide-react";
 import { toast } from "sonner";
 
 const NoteDetailPage = () => {
@@ -45,136 +45,99 @@ const NoteDetailPage = () => {
     toast("Note content copied to clipboard");
   };
 
-  const performSearch = () => {
-    if (!searchText || !content) {
-      setSearchMatches([]);
-      return;
-    }
-
-    const text = content.toLowerCase();
-    const searchLower = searchText.toLowerCase();
-    const matches: number[] = [];
-    let index = 0;
-
-    while (index < text.length) {
-      const foundIndex = text.indexOf(searchLower, index);
-      if (foundIndex === -1) break;
-      matches.push(foundIndex);
-      index = foundIndex + 1;
-    }
-
-    setSearchMatches(matches);
-    setCurrentMatchIndex(matches.length > 0 ? 0 : -1);
-
-    if (matches.length > 0 && contentRef.current) {
-      const textarea = contentRef.current;
-      const firstMatchPosition = matches[0];
-      textarea.focus();
-      textarea.setSelectionRange(firstMatchPosition, firstMatchPosition + searchText.length);
-    }
-  };
-
-  const goToNextMatch = () => {
-    if (searchMatches.length === 0) return;
-    const nextIndex = (currentMatchIndex + 1) % searchMatches.length;
-    setCurrentMatchIndex(nextIndex);
-    
-    if (contentRef.current) {
-      const matchPosition = searchMatches[nextIndex];
-      contentRef.current.focus();
-      contentRef.current.setSelectionRange(
-        matchPosition,
-        matchPosition + searchText.length
-      );
-    }
-  };
-
   if (!note) return null;
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       {/* Header */}
       <div className="sticky top-0 z-10 bg-white border-b border-gray-200">
-        <div className="flex justify-between items-center p-4">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => navigate("/")}
-              className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors"
-            >
-              <ChevronLeft size={24} />
-            </button>
-            <h1 className="text-xl font-semibold">Edit Note</h1>
-          </div>
-          
-          <div className="flex items-center gap-2">
-            {isSearching ? (
+        <div className="flex flex-col">
+          <div className="flex justify-between items-center p-4">
+            <div className="flex items-center gap-4">
               <button
-                onClick={() => {
-                  setIsSearching(false);
-                  setSearchText("");
-                  setSearchMatches([]);
-                }}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                onClick={() => navigate("/")}
+                className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors"
               >
-                <X size={24} />
+                <ChevronLeft size={24} />
               </button>
-            ) : (
-              <>
-                <button
-                  onClick={handleCopy}
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                >
-                  <Copy size={24} />
-                </button>
-                <button
-                  onClick={() => setIsSearching(true)}
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                >
-                  <Search size={24} />
-                </button>
-                <Button 
-                  onClick={handleSave}
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg flex items-center gap-2"
-                >
-                  <Check size={20} />
-                  <span>Save</span>
-                </Button>
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* Search bar */}
-        {isSearching && (
-          <div className="px-4 py-3 border-t border-gray-200 bg-gray-50">
-            <div className="flex gap-2">
-              <Input
-                type="text"
-                placeholder="Search in note..."
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                className="flex-1"
-                autoFocus
-              />
-              <Button 
-                onClick={performSearch}
-                className="bg-blue-500 hover:bg-blue-600"
-              >
-                Search
-              </Button>
+              <h1 className="text-xl font-semibold">Edit Note</h1>
             </div>
-            {searchMatches.length > 0 && (
-              <div className="flex justify-between items-center mt-2">
-                <span className="text-sm text-gray-600">
-                  {currentMatchIndex + 1} of {searchMatches.length} matches
-                </span>
-                <Button variant="outline" size="sm" onClick={goToNextMatch}>
-                  Next
+            
+            <div className="flex items-center gap-2">
+              {isSearching ? (
+                <button
+                  onClick={() => {
+                    setIsSearching(false);
+                    setSearchText("");
+                    setSearchMatches([]);
+                  }}
+                  className="p-2 hover:bg-gray-100 rounded-full"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={handleCopy}
+                    className="p-2 hover:bg-gray-100 rounded-full"
+                  >
+                    <Copy size={20} className="text-gray-600" />
+                  </button>
+                  <button
+                    onClick={() => setIsSearching(true)}
+                    className="p-2 hover:bg-gray-100 rounded-full"
+                  >
+                    <Search size={20} className="text-gray-600" />
+                  </button>
+                  <button
+                    onClick={handleDelete}
+                    className="p-2 hover:bg-gray-100 rounded-full"
+                  >
+                    <Trash size={20} className="text-gray-600" />
+                  </button>
+                  <Button 
+                    onClick={handleSave}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-6"
+                  >
+                    Save
+                  </Button>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Search bar */}
+          {isSearching && (
+            <div className="px-4 py-3 border-t border-gray-200 bg-gray-50">
+              <div className="flex gap-2">
+                <Input
+                  type="text"
+                  placeholder="Search in note..."
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  className="flex-1"
+                  autoFocus
+                />
+                <Button 
+                  onClick={() => {}} 
+                  className="bg-blue-500 hover:bg-blue-600"
+                >
+                  Search
                 </Button>
               </div>
-            )}
-          </div>
-        )}
+              {searchMatches.length > 0 && (
+                <div className="flex justify-between items-center mt-2">
+                  <span className="text-sm text-gray-600">
+                    {currentMatchIndex + 1} of {searchMatches.length} matches
+                  </span>
+                  <Button variant="outline" size="sm" onClick={() => {}}>
+                    Next
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Note Content */}
@@ -193,21 +156,7 @@ const NoteDetailPage = () => {
           onChange={(e) => setContent(e.target.value)}
           placeholder="Start writing..."
           className="flex-1 min-h-[calc(100vh-300px)] text-base resize-none focus-visible:ring-2"
-          style={{
-            backgroundColor: "white",
-          }}
         />
-      </div>
-
-      {/* Delete button */}
-      <div className="fixed bottom-20 right-4 z-10">
-        <button
-          onClick={handleDelete}
-          className="p-3 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-colors border border-gray-200"
-          aria-label="Delete note"
-        >
-          <Trash className="w-6 h-6 text-red-500" />
-        </button>
       </div>
     </div>
   );
