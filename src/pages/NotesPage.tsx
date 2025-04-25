@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, Plus } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import { ReactNode } from "react";
 
 const NotesPage = () => {
   const { notes, addNote } = useNotes();
@@ -34,7 +35,7 @@ const NotesPage = () => {
       note.content.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const highlightSearchText = (text: string) => {
+  const highlightSearchText = (text: string): ReactNode => {
     if (!searchQuery) return text;
     const parts = text.split(new RegExp(`(${searchQuery})`, 'gi'));
     return parts.map((part, i) => 
@@ -118,8 +119,8 @@ const NotesPage = () => {
               <NoteCard
                 note={{
                   ...note,
-                  title: highlightSearchText(note.title),
-                  content: highlightSearchText(note.content)
+                  titleNode: highlightSearchText(note.title),
+                  contentNode: highlightSearchText(note.content)
                 }}
               />
             </div>
