@@ -7,26 +7,28 @@ const BottomNavBar = () => {
   const path = location.pathname;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex justify-around py-2 px-4 z-10">
-      <Link
-        to="/"
-        className={`flex flex-col items-center p-2 rounded-xl transition-colors w-1/2 ${
-          path === "/" ? "text-blue-500" : "text-gray-400"
-        }`}
-      >
-        <FileText size={24} />
-        <span className="text-sm mt-1 font-medium">Notes</span>
-      </Link>
-      
-      <Link
-        to="/tasks"
-        className={`flex flex-col items-center p-2 rounded-xl transition-colors w-1/2 ${
-          path === "/tasks" ? "text-blue-500" : "text-gray-400"
-        }`}
-      >
-        <ListTodo size={24} />
-        <span className="text-sm mt-1 font-medium">Tasks</span>
-      </Link>
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-lg">
+      <div className="max-w-lg mx-auto flex justify-around">
+        <Link
+          to="/"
+          className={`flex flex-col items-center py-3 px-5 rounded-xl transition-colors ${
+            path === "/" ? "text-blue-500" : "text-gray-400"
+          }`}
+        >
+          <FileText size={24} />
+          <span className="text-xs mt-1 font-medium">Notes</span>
+        </Link>
+        
+        <Link
+          to="/tasks"
+          className={`flex flex-col items-center py-3 px-5 rounded-xl transition-colors ${
+            path === "/tasks" ? "text-blue-500" : "text-gray-400"
+          }`}
+        >
+          <ListTodo size={24} />
+          <span className="text-xs mt-1 font-medium">Tasks</span>
+        </Link>
+      </div>
     </div>
   );
 };

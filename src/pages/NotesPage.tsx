@@ -1,10 +1,11 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useNotes } from "@/contexts/NotesContext";
 import NoteCard from "@/components/NoteCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Plus } from "lucide-react";
+import { Search, Plus, Trash, Brain } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { ReactNode } from "react";
 import FloatingActionButton from "@/components/FloatingActionButton";
@@ -46,22 +47,44 @@ const NotesPage = () => {
   };
 
   return (
-    <div className="pb-20 px-4 pt-4 relative">
-      <h1 className="text-3xl font-bold mb-6">My Notes</h1>
-      
-      <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-        <Input
-          type="text"
-          placeholder="Search notes..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-10 bg-white border border-gray-200 rounded-xl"
-        />
+    <div className="pb-20 px-4 pt-4 relative min-h-screen">
+      <div className="flex flex-col space-y-4">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold">My Notes</h1>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9"
+              onClick={() => {}}
+            >
+              <Brain className="h-5 w-5 text-gray-600" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9"
+              onClick={() => {}}
+            >
+              <Trash className="h-5 w-5 text-gray-600" />
+            </Button>
+          </div>
+        </div>
+        
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+          <Input
+            type="text"
+            placeholder="Search notes..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10 bg-white border border-gray-200 rounded-xl h-10"
+          />
+        </div>
       </div>
 
       {showAddNote ? (
-        <div className="mb-4 p-4 bg-white rounded-xl border border-gray-200 shadow-sm animate-slide-in-bottom">
+        <div className="mb-4 p-4 bg-white rounded-xl border border-gray-200 shadow-sm animate-slide-in-bottom mt-4">
           <Input
             type="text"
             placeholder="Note title"
@@ -100,7 +123,7 @@ const NotesPage = () => {
           <p>No notes found. Create your first note!</p>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-2 mt-4">
           {filteredNotes.map((note) => (
             <div
               key={note.id}
@@ -119,9 +142,11 @@ const NotesPage = () => {
         </div>
       )}
 
-      <FloatingActionButton 
-        onClick={() => setShowAddNote(true)} 
-      />
+      <FloatingActionButton onClick={() => setShowAddNote(true)} />
+
+      <div className="fixed bottom-20 left-0 right-0 text-center text-sm text-gray-500 py-2">
+        Created with <Brain className="inline h-4 w-4" /> by mr.marb
+      </div>
     </div>
   );
 };
