@@ -49,8 +49,7 @@
   }
 
   ::selection {
-    background-color: #93c5fd;
-    color: #1e3a8a;
+    @apply bg-blue-100 text-blue-900;
   }
 }
 
