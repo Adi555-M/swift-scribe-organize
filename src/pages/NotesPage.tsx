@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useNotes } from "@/contexts/NotesContext";
@@ -46,10 +47,10 @@ const NotesPage = () => {
   };
 
   return (
-    <div className="pb-20 px-4 pt-4 relative min-h-screen">
+    <div className="pb-20 px-4 pt-4 relative min-h-screen bg-gradient-to-b from-white to-gray-50">
       <div className="flex flex-col space-y-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold">My Notes</h1>
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">My Notes</h1>
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
@@ -77,7 +78,7 @@ const NotesPage = () => {
             placeholder="Search notes..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-white border border-gray-200 rounded-xl h-10"
+            className="pl-10 bg-white/80 border border-gray-200 rounded-xl h-10 shadow-sm"
           />
         </div>
       </div>
@@ -109,7 +110,7 @@ const NotesPage = () => {
             </Button>
             <Button
               onClick={handleAddNote}
-              className="bg-blue-500 text-white hover:bg-blue-600"
+              className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white"
             >
               Add
             </Button>
@@ -127,7 +128,7 @@ const NotesPage = () => {
             <div
               key={note.id}
               onClick={() => navigate(`/note/${note.id}`)}
-              className="cursor-pointer"
+              className="cursor-pointer hover:scale-[1.01] transition-transform"
             >
               <NoteCard
                 note={{

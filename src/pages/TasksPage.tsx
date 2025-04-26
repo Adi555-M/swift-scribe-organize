@@ -39,8 +39,8 @@ const TasksPage = () => {
   ];
 
   return (
-    <div className="pb-20 px-4 pt-4">
-      <h1 className="text-3xl font-bold mb-4">My Tasks</h1>
+    <div className="pb-20 px-4 pt-4 bg-gradient-to-b from-white to-gray-50 min-h-screen">
+      <h1 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">My Tasks</h1>
 
       <TabSwitcher
         activeTab={activeTab}
@@ -55,14 +55,14 @@ const TasksPage = () => {
             value={newTaskContent}
             onChange={(e) => setNewTaskContent(e.target.value)}
             placeholder="Add a new task..."
-            className="border-gray-200"
+            className="border-gray-200 shadow-sm"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 handleAddTask();
               }
             }}
           />
-          <Button onClick={handleAddTask}>Add</Button>
+          <Button onClick={handleAddTask} className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white">Add</Button>
         </div>
       )}
 
@@ -70,7 +70,7 @@ const TasksPage = () => {
         <div>
           {!isAddingTask && (
             <div 
-              className="mb-4 p-4 border border-gray-200 bg-gray-50 rounded-lg text-gray-500 text-center cursor-pointer hover:bg-gray-100"
+              className="mb-4 p-4 border border-gray-200 bg-white/80 rounded-lg text-gray-500 text-center cursor-pointer hover:bg-gray-100 shadow-sm"
               onClick={() => setIsAddingTask(true)}
             >
               Add a new task...
