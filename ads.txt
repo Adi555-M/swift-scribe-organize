@@ -1,1 +1,5 @@
 
+<?php
+header('Location: https://srv.adstxtmanager.com/19390/adi555-m.github.io');
+exit;
+?>
